@@ -7,6 +7,8 @@ class LinearRegression():
         self.lr = lr
         
     def forward(self, x):
+        if x.ndim == 1:
+            x = x.reshape(-1, 1)
         return self.k @ x.T + self.b
     
     def backward(self, x, y, y_h):
@@ -28,6 +30,6 @@ class LinearRegression():
         return L
     
     def evaluate(self, x, y):
-        y_h = self.forward(x)
+        y_h = self.forward(x).squeeze()
         L = self.loss(y, y_h)
         return L
